@@ -49,7 +49,12 @@ function! GetNimIndent()
   endif
 
   " If the previous line is an advance type declaration, indent.
-  if pline =~ '=\s*\%(concept\|enum\|object\|tuple\)\s*$'
+  if pline =~ '=\s*\%(concept\|enum\|tuple\)\s*$'
+    return ind + shiftwidth()
+  endif
+
+  " If the previous line is an object type declaration, indent.
+  if pline =~ '=\s*\%(ref\)\?\s*object\s*$'
     return ind + shiftwidth()
   endif
 
