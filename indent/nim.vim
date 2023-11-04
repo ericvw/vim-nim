@@ -58,11 +58,9 @@ function! GetNimIndent()
     return ind + shiftwidth()
   endif
 
-  " If the previous line is a routine, indent.
+  " If the previous line ends with =, indent.
   if pline =~ '=\s*$'
-    if pline =~ '\%(convertor\|func\|iterator\|macro\|method\|proc\|template\)'
-      return ind + shiftwidth()
-    endif
+    return ind + shiftwidth()
   endif
 
   let line = getline(v:lnum)
