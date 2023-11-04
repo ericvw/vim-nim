@@ -43,6 +43,11 @@ function! GetNimIndent()
     return ind + shiftwidth()
   endif
 
+  " If the previous line was a terminating execution statement, dedent.
+  if pline =~ '^\s*\%(break\|continue\|discard\|return\)\>'
+    return ind - shiftwidth()
+  endif
+
   " If the previous line is an assignment-like statement, indent.
   if pline =~ '^\s*\%(const\|let\|type\|var\)\s*$'
     return ind + shiftwidth()
