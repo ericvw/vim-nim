@@ -28,6 +28,10 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
+function! s:StripComment(line)
+  return substitute(a:line, '#.*$', '', '')
+endfunction
+
 function! GetNimIndent()
   let plnum = prevnonblank(v:lnum - 1)
   if plnum == 0
@@ -36,7 +40,7 @@ function! GetNimIndent()
   endif
 
   let ind = indent(plnum)
-  let pline = getline(plnum)
+  let pline = s:StripComment(getline(plnum))
 
   " If the previous line ends with a colon, indent.
   if pline =~ ':\s*$'
