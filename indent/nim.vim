@@ -39,8 +39,15 @@ function! GetNimIndent()
     return 0
   endif
 
+  let pline = getline(plnum)
+
+  # If the previous line is a comment, retain indentation.
+  if pline =~ '^\s*#'
+    return -1
+  endif
+
   let ind = indent(plnum)
-  let pline = s:StripComment(getline(plnum))
+  pline = s:StripComment(pline)
 
   " If the previous line ends with a colon, indent.
   if pline =~ ':\s*$'
