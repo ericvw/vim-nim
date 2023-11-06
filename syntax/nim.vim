@@ -86,21 +86,25 @@ syn match nimEscapeStr	contained "\\u{\x\+}"
 " https://nim-lang.org/docs/manual.html#lexical-analysis-numeric-literals
 syn case ignore
 
+" Numeric Literal Suffixes
+syn match nimIntLit contained "'\?[iu]\d\+"
+syn match nimFloatLit contained "'\?\%(f\d\+\|d\)"
+
 " Hexidecimal
-syn match nimInt "\<0x\x\%(_\?\x\)*\%('[iu]\d\+\)\?\>"
-syn match nimFloat "\<0x\x\%(_\?\x\)*\%('\%(f\d\+\|d\)\)\>"
+syn match nimInt "\<0x\x\%(_\?\x\)*\%('[iu]\d\+\)\?\>" contains=nimIntLit
+syn match nimFloat "\<0x\x\%(_\?\x\)*\%('\%(f\d\+\|d\)\)\>" contains=nimFloatLit
 " Decimal
-syn match nimInt "\<\d\%(_\?\d\)*\%('\?[iu]\d\+\)\?\>"
-syn match nimFloat "\<\d\%(_\?\d\)*\%('\?\%(f\d\+\|d\)\)\>"
+syn match nimInt "\<\d\%(_\?\d\)*\%('\?[iu]\d\+\)\?\>" contains=nimIntLit
+syn match nimFloat "\<\d\%(_\?\d\)*\%('\?\%(f\d\+\|d\)\)\>" contains=nimFloatLit
 " Octal
-syn match nimInt "\<0o\o\%(_\?\o\)*\%('\?[iu]\d\+\)\?\>"
-syn match nimFloat "\<0o\o\%(_\?\o\)*\%('\?\%(f\d\+\|d\)\)\>"
+syn match nimInt "\<0o\o\%(_\?\o\)*\%('\?[iu]\d\+\)\?\>" contains=nimFloatLit
+syn match nimFloat "\<0o\o\%(_\?\o\)*\%('\?\%(f\d\+\|d\)\)\>" contains=nimFloatLit
 " Binary
-syn match nimInt "\<0b[01]\%(_\>[01]\)*\%('\?[iu]\d\+\)\?\>"
-syn match nimFloat "\<0b[01]\%(_\>[01]\)*\%('\?\%(f\d\+\|d\)\)\>"
+syn match nimInt "\<0b[01]\%(_\>[01]\)*\%('\?[iu]\d\+\)\?\>" contains=nimFloatLit
+syn match nimFloat "\<0b[01]\%(_\>[01]\)*\%('\?\%(f\d\+\|d\)\)\>" contains=nimFloatLit
 "Float
-syn match nimFloat "\<\d\%(_\?\d\)*\.\d\%(_\?\d\)*\%(e[-+]\?\d\%(_\?\d\)*\)\%('\?\%(f\d\+\|d\)\)\?\>"
-syn match nimFloat "\<\d\%(_\?\d\)*e[-+]\?\d\%(_\?\d\)*\%('\?\%(f\d\+\|d\)\)\?\>"
+syn match nimFloat "\<\d\%(_\?\d\)*\.\d\%(_\?\d\)*\%(e[-+]\?\d\%(_\?\d\)*\)\%('\?\%(f\d\+\|d\)\)\?\>" contains=nimFloatLit
+syn match nimFloat "\<\d\%(_\?\d\)*e[-+]\?\d\%(_\?\d\)*\%('\?\%(f\d\+\|d\)\)\?\>" contains=nimFloatLit
 
 syn case match
 
@@ -185,6 +189,9 @@ syn keyword nimBuiltin newWideCString
 
 " Intermediate highlight links.
 hi def link nimTripleQuotes	nimQuotes
+
+hi def link nimFloatLit		nimNumericLit
+hi def link nimIntLit		nimNumericLit
 " TODO: Only have iterators highlight after '.'. How to do this?
 "hi def link nimIterator		nimBuiltin
 
@@ -217,6 +224,7 @@ hi def link nimStructure	Structure
 
 hi def link nimEscape		SpecialChar
 hi def link nimEscapeStr	SpecialChar
+hi def link nimNumericLit	SpecialChar
 
 hi def link nimTodo		Todo
 
