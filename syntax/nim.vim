@@ -134,7 +134,7 @@ syn keyword nimBuiltin atomicDec atomicInc
 syn keyword nimBuiltin card cas chr clamp cmp cmpMem compileOption compiles
 syn keyword nimBuiltin copyMem cpuRelax create createShared createSharedU
 syn keyword nimBuiltin createU cstringArrayToSeq
-syn match   nimBuiltin "contains"
+syn keyword nimBuiltin contains
 syn keyword nimBuiltin dealloc deallocCStringArray deallocHeap deallocImpl
 syn keyword nimBuiltin deallocShared deallocSharedImpl debugEcho dec
 syn keyword nimBuiltin declared declaredInScope deepCopy default defined del
