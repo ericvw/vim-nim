@@ -49,6 +49,11 @@ function! GetNimIndent()
   let ind = indent(plnum)
   pline = s:StripComment(pline)
 
+  " If the previous line ends with (, indent.
+  if pline =~ '($'
+    return ind + shiftwidth()
+  endif
+
   " If the previous line ends with a colon, indent.
   if pline =~ ':\s*$'
     return ind + shiftwidth()
