@@ -8,6 +8,9 @@ if exists("b:did_indent")
 endif
 let b:did_indent = 1
 
+" Rely upon cindent as the fallback.
+setlocal cinoptions=(1s,m1
+
 " Rely upon current line indent in tandem with indentexpr.
 setlocal autoindent
 " Ensure lisp indenting is not in effect.
@@ -16,7 +19,7 @@ setlocal nolisp
 setlocal indentkeys+==elif
 setlocal indentexpr=GetNimIndent()
 
-let b:undo_indent = "setlocal autoindent< lisp< indentkeys< indentexpr<"
+let b:undo_indent = "setlocal cinoptions< autoindent< lisp< indentkeys< indentexpr<"
 
 " Only define the function once.
 if exists("*GetNimIndent")
@@ -48,11 +51,6 @@ function! GetNimIndent()
 
   let ind = indent(plnum)
   pline = s:StripComment(pline)
-
-  " If the previous line ends with (, indent.
-  if pline =~ '($'
-    return ind + shiftwidth()
-  endif
 
   " If the previous line ends with a colon, indent.
   if pline =~ ':\s*$'
@@ -91,7 +89,7 @@ function! GetNimIndent()
     return ind - shiftwidth()
   endif
 
-  return -1
+  return cindent(v:lnum)
 endfunction
 
 " Restore original settings.
